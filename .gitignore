@@ -1,0 +1,14 @@
+# API
+target/
+*.iml
+.idea/
+.DS_Store
+
+# Web
+node_modules/
+dist/
+.angular/
+coverage/
+
+# Env
+.env
