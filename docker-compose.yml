@@ -1,20 +1,20 @@
 services:
   db:
     image: postgres:16
-    container_name: nowatt-db
+    container_name: wardcare-db
     environment:
-      POSTGRES_DB: nowatt
-      POSTGRES_USER: nowatt
-      POSTGRES_PASSWORD: nowatt
+      POSTGRES_DB: wardcare
+      POSTGRES_USER: wardcare
+      POSTGRES_PASSWORD: wardcare
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - nowatt_pgdata:/var/lib/postgresql/data
+      - wardcare_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U nowatt -d nowatt"]
+      test: [ "CMD-SHELL", "pg_isready -U wardcare -d wardcare" ]
       interval: 5s
       timeout: 3s
       retries: 10
 
 volumes:
-  nowatt_pgdata:
+  wardcare_pgdata:
