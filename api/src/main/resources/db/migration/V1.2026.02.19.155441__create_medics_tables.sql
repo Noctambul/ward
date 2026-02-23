@@ -3,7 +3,7 @@ create extension if not exists pgcrypto;
 create table medics
 (
     id         uuid primary key     default gen_random_uuid(),
-    email      text        not null,
+    email      text        not null unique,
     password   text        not null,
     first_name text        not null,
     last_name  text        not null,

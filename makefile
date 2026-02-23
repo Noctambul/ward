@@ -10,3 +10,6 @@ db-down:
 
 api:
 	cd api && ./mvnw quarkus:dev
+
+api-debug:
+    cd api && ./mvnw quarkus:dev -Ddebug=5005
