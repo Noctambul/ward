@@ -1,0 +1,26 @@
+meta {
+  name: Authenticate
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/api/v1/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "doctor@wardcare.fr",
+    "password": "123456"
+  }
+}
+
+script:post-response {
+  bru.setEnvVar("authToken", res.getBody().token)
+}
