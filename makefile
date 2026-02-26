@@ -1,4 +1,4 @@
-.PHONY: db-up db-down dev api quarkus-dev
+.PHONY: db-up db-down dev api api-debug test test-unit test-integration
 
 dev: db-up api
 
@@ -12,4 +12,7 @@ api:
 	cd api && ./mvnw quarkus:dev
 
 api-debug:
-    cd api && ./mvnw quarkus:dev -Ddebug=5005
+	cd api && ./mvnw quarkus:dev -Ddebug=5005
+
+test:
+	cd api && ./mvnw test

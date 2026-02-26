@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "medics")
-public class Medic extends PanacheEntityBase {
+public class MedicEntity extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,7 +25,7 @@ public class Medic extends PanacheEntityBase {
     @Column(name = "last_name", nullable = false)
     public String lastName;
 
-    public static Medic findByEmail(String email) {
+    public static MedicEntity findByEmail(String email) {
         return find("email", email).firstResult();
     }
 }

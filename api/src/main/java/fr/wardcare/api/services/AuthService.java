@@ -1,6 +1,6 @@
 package fr.wardcare.api.services;
 
-import fr.wardcare.api.entities.Medic;
+import fr.wardcare.api.entities.MedicEntity;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,7 +13,7 @@ public class AuthService {
     JwtTokenService jwtTokenService;
 
     public String login(String email, String password) {
-        Medic m = Medic.findByEmail(email);
+        MedicEntity m = MedicEntity.findByEmail(email);
 
         if (m == null)
             throw new WebApplicationException(401);
