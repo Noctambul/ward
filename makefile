@@ -14,5 +14,8 @@ api:
 api-debug:
 	cd api && ./mvnw quarkus:dev -Ddebug=5005
 
+web:
+	cd web && npm start
+
 test:
 	cd api && ./mvnw test
