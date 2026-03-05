@@ -1,12 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { LayoutComponent } from './features/layout/layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatToolbarModule],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  imports: [LayoutComponent],
+  template: `<app-layout />`,
 })
 export class App {
   protected readonly title = signal('web');

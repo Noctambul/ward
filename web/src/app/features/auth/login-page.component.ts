@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,44 +18,48 @@ import { finalize } from 'rxjs';
     MatFormFieldModule, MatInputModule, MatButtonModule,
     MatCardModule, MatProgressSpinnerModule],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  loading = false
-  serverError = '';
+  readonly loading = signal(false);
+  readonly serverError = signal('');
 
-  loginForm = inject(FormBuilder).group({
+  readonly loginForm = inject(FormBuilder).group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  get emailCtrl() { return this.loginForm.get('email')! }
-  get passwordCtrl() { return this.loginForm.get('password')! }
+  readonly emailCtrl = this.loginForm.controls.email
+  readonly passwordCtrl = this.loginForm.controls.password
 
   ngOnInit() {
     this.logout();
   }
 
   onSubmit() {
-    if (!this.loginForm.valid) {
+    this.serverError.set("");
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    this.startLoading()
-    this.authService.login(this.loginForm.value.email!, this.loginForm.value.password!)
-      .pipe( finalize(() => {
-        this.stopLoading();
-      }))
+    this.loading.set(true);
+
+    const { email, password } = this.loginForm.getRawValue();
+
+    this.authService.login(email!, password!)
+      .pipe( finalize(() => this.loading.set(false)))
       .subscribe({
         next: () => this.redirectIfAuthenticated(),
         error: (err) => {
           if (err.status === 401) {
-            this.serverError = 'Identifiants invalides';
+            this.serverError.set('Identifiants invalides');
           } else {
-            this.serverError = 'Une erreur est survenue';
+            this.serverError.set('Une erreur est survenue');
           }
         }
       });
@@ -70,16 +74,6 @@ export class LoginPageComponent implements OnInit {
 
   private logout() {
     this.authService.logout();
-  }
-
-  private startLoading() {
-    this.loading = true;
-    this.loginForm.disable();
-  }
-
-  private stopLoading() {
-    this.loading = false;
-    this.loginForm.enable();
   }
 
   private redirectIfAuthenticated() {

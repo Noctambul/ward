@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <span>Ward</span>
+  <span class="spacer"></span>
+  @if (isAuthenticated) {
+    <button mat-button (click)="logout()">Logout</button>
+  }
+</mat-toolbar>
+<main class="container">
+  <router-outlet />
+</main>
