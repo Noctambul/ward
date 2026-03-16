@@ -9,7 +9,7 @@ const PATIENTS_URL = environment.apiV1 + '/patients';
 @Injectable({
   providedIn: 'root',
 })
-export class PatientsService {
+export class PatientService {
   private http = inject(HttpClient);
 
   list(): Observable<Patient[]> {
