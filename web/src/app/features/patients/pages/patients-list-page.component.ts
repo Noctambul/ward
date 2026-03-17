@@ -19,7 +19,7 @@ export class PatientsListPageComponent {
   private readonly router = inject(Router);
   private readonly patientService = inject(PatientService);
 
-  readonly displayedColumns: string[] = ['lastName', 'firstName', 'birthDate', 'gender'];
+  readonly displayedColumns: string[] = ['name', 'birthDate', 'gender'];
   readonly loading = signal(false);
   readonly errorMessage = signal('');
 

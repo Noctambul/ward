@@ -1,7 +1,7 @@
 <h1>Patients</h1>
 <div class="container">
   <div class="header">
-    <h1>Liste des patients</h1>
+    <h1>Liste des patients ({{ patients().length }})</h1>
     <button mat-raised-button color="primary" (click)="createPatient()">
       <mat-icon>add</mat-icon>
       Nouveau patient
@@ -23,12 +23,26 @@
   }
 
   @if (!loading() && patients().length > 0) {
-    <table mat-table [dataSource]="patients()">
-      <ul>
-        @for (patient of patients(); track patient.id) {
-          <li>{{ patient.lastName }} {{ patient.firstName }}</li>
-        }
-      </ul>
-    </table>
+    <mat-table [dataSource]="patients()">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+        <mat-cell *matCellDef="let patient">{{ patient.lastName }} {{ patient.firstName }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="birthDate">
+        <mat-header-cell *matHeaderCellDef>Date de naissance</mat-header-cell>
+        <mat-cell *matCellDef="let patient">{{ patient.birthDate }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef>Genre</mat-header-cell>
+        <mat-cell *matCellDef="let patient">{{ patient.gender }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
   }
 </div>
